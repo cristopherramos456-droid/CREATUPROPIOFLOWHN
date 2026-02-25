@@ -642,17 +642,133 @@ footer img { height: 32px; width: auto; filter: drop-shadow(0 2px 6px rgba(61,12
 .notification.show { transform: translateY(0); }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  nav { padding: 0 1.5rem; }
-  .nav-links { gap: 0; }
-  .nav-links li a { padding: 0.4rem 0.6rem; font-size: 0.75rem; }
-  .home-hero { grid-template-columns: 1fr; }
+/* ===== HAMBURGER BUTTON ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: auto;
+  z-index: 300;
+}
+.hamburger span {
+  display: block;
+  width: 26px; height: 2.5px;
+  background: var(--cream);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+
+/* ===== MOBILE DRAWER ===== */
+.nav-drawer {
+  display: none;
+  position: fixed;
+  top: 70px; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(160deg, #080e1c 0%, #0f0a1e 100%);
+  z-index: 150;
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+  gap: 0.5rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(.22,.68,0,1.2);
+  border-top: 1px solid var(--border);
+}
+.nav-drawer.open {
+  transform: translateX(0);
+}
+.nav-drawer a {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  color: rgba(240,244,255,0.75);
+  text-decoration: none;
+  font-size: 1.1rem; font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+}
+.nav-drawer a:hover, .nav-drawer a.active {
+  color: var(--cream);
+  background: rgba(255,255,255,0.05);
+  border-color: var(--border);
+}
+.nav-drawer a.active { color: var(--orange-l); background: rgba(224,123,26,0.08); border-color: rgba(224,123,26,0.2); }
+.nav-drawer .drawer-contact {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: #fff !important;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 6px 20px rgba(26,95,184,0.35);
+  border-color: transparent !important;
+}
+.nav-drawer-divider {
+  height: 1px; background: var(--border); margin: 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+  nav { padding: 0 1.2rem; }
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-drawer { display: flex; }
+
+  /* Hero */
+  .home-hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-visual { display: none; }
-  .hero-text { padding: 3rem 1.5rem; }
-  .features-grid, .steps-grid, .gallery-grid, .why-grid, .price-preview { grid-template-columns: 1fr 1fr; }
+  .hero-text { padding: 2.5rem 1.5rem 2rem; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-sub { font-size: 0.92rem; max-width: 100%; }
+  .hero-btns { flex-direction: column; }
+  .btn-primary, .btn-outline { text-align: center; width: 100%; }
+
+  /* Stats */
+  .stats-bar { flex-wrap: wrap; }
+  .stat-item { flex: 1 1 45%; border-right: none; border-bottom: 1px solid var(--border); }
+
+  /* Grids -> single column on small, 2 col on medium */
+  .features-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .steps-grid::before { display: none; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .price-preview { grid-template-columns: 1fr; }
+  .price-card.featured { transform: none; }
+
+  /* Designer */
+  .config-layout { grid-template-columns: 1fr; gap: 1.5rem; }
+  .designer-page, .gallery-page, .how-page, .prices-page, .home-features { padding: 1.5rem 1.2rem; }
+  .canvas-toolbar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.3rem; }
+  .zone-btn { white-space: nowrap; font-size: 0.7rem; }
+
+  /* Steps */
+  .step-item { padding: 0 0.5rem; }
+
+  /* Sections */
+  .section-title { font-size: 1.6rem; }
+  .coming-soon { padding: 3rem 1rem; }
+  .cs-title { font-size: 1.8rem; }
+  .notify-form { flex-direction: column; }
+
+  footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.2rem; }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .steps-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .steps-grid::before { display: none; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
   .config-layout { grid-template-columns: 1fr; }
-  .designer-page, .gallery-page, .how-page, .prices-page, .home-features { padding: 2rem 1.5rem; }
-  footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+  .gallery-grid { grid-template-columns: repeat(3,1fr); }
+  .hero-text { padding: 3rem 2.5rem; }
+  nav { padding: 0 2rem; }
 }
 </style>
 </head>
@@ -671,7 +787,21 @@ footer img { height: 32px; width: auto; filter: drop-shadow(0 2px 6px rgba(61,12
     <li><a href="#" onclick="showPage('precios',this)">Precios</a></li>
     <li><a href="#" class="nav-contact" onclick="showNotification('📲 Próximamente — ¡Contacto directo disponible muy pronto!'); return false;">Contacto</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#" class="active" id="drawer-inicio" onclick="showPage('inicio',this); closeDrawer()">🏠 Inicio</a>
+  <a href="#" id="drawer-disenar" onclick="showPage('disenar',this); closeDrawer()">👕 Diseñar</a>
+  <a href="#" id="drawer-galeria" onclick="showPage('galeria',this); closeDrawer()">🎨 Galería</a>
+  <a href="#" id="drawer-como" onclick="showPage('como',this); closeDrawer()">⚙️ Cómo funciona</a>
+  <a href="#" id="drawer-precios" onclick="showPage('precios',this); closeDrawer()">💎 Precios</a>
+  <div class="nav-drawer-divider"></div>
+  <a href="#" class="drawer-contact" onclick="showNotification('📲 Próximamente — ¡Contacto directo disponible muy pronto!'); closeDrawer(); return false;">📲 Contacto directo</a>
+</div>
 
 <!-- ============ PAGE: INICIO ============ -->
 <div id="page-inicio" class="page active">
@@ -1071,10 +1201,38 @@ footer img { height: 32px; width: auto; filter: drop-shadow(0 2px 6px rgba(61,12
 function showPage(id, linkEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
+  // Sync desktop nav
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
   if (linkEl) linkEl.classList.add('active');
+  // Sync drawer links
+  document.querySelectorAll('.nav-drawer a').forEach(a => a.classList.remove('active'));
+  const drawerLink = document.getElementById('drawer-' + id);
+  if (drawerLink) drawerLink.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+// ===== DRAWER =====
+function toggleDrawer() {
+  const drawer = document.getElementById('navDrawer');
+  const burger = document.getElementById('hamburger');
+  drawer.classList.toggle('open');
+  burger.classList.toggle('open');
+  // Prevent body scroll when drawer open
+  document.body.style.overflow = drawer.classList.contains('open') ? 'hidden' : '';
+}
+function closeDrawer() {
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+// Close drawer on outside tap
+document.addEventListener('click', function(e) {
+  const drawer = document.getElementById('navDrawer');
+  const burger = document.getElementById('hamburger');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !burger.contains(e.target)) {
+    closeDrawer();
+  }
+});
 
 // ===== DESIGNER =====
 let qty = 1;
